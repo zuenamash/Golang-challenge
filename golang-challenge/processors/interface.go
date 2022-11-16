@@ -26,7 +26,8 @@ type HotelRanking struct {
 
 func (*HotelRanking) String() string {
 	// Implement this function
-	return ""
+	return fmt.Sprintf("%v Rating - %2f",
+	 h.hotel.Name, h.rank)
 }
 
 type ProcessorInterface interface {
@@ -37,5 +38,8 @@ type ProcessorInterface interface {
 
 func CreateProcessorFromData(data *TripsData, wg *sync.WaitGroup) ProcessorInterface  {
 	// @todo Initialize your processor here
-	return nil
+	return Processor{
+		data:data,
+		wg:wg
+	}
 }
