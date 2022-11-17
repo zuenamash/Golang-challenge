@@ -2,20 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/brianvoe/gofakeit/v6"
-	"github.com/google/uuid"
 	"golangchallenge/processors"
 	"math/rand"
 	"sync"
+
+	"github.com/brianvoe/gofakeit/v6"
+	"github.com/google/uuid"
 )
 
+// GetTripsData creates a TripsData object with random data
 func GetTripsData(wg *sync.WaitGroup) *processors.TripsData {
 	data := &processors.TripsData{}
 	// Generate 10000 drivers
 	data.Drivers = make([]*processors.Driver, 0)
 	for i := 0; i < 10000; i++ {
 		data.Drivers = append(data.Drivers, &processors.Driver{
-			Id:   uuid.NewString(),
+			ID:   uuid.NewString(),
 			Name: gofakeit.Name(),
 		})
 	}
@@ -23,7 +25,7 @@ func GetTripsData(wg *sync.WaitGroup) *processors.TripsData {
 	data.Hotels = make([]*processors.Hotel, 0)
 	for i := 0; i < 100; i++ {
 		data.Hotels = append(data.Hotels, &processors.Hotel{
-			Id:   uuid.NewString(),
+			ID:   uuid.NewString(),
 			Name: gofakeit.City(),
 		})
 	}
@@ -36,9 +38,8 @@ func GetTripsData(wg *sync.WaitGroup) *processors.TripsData {
 			driver := data.Drivers[rand.Intn(len(data.Drivers))]
 			hotel := data.Hotels[rand.Intn(len(data.Hotels))]
 			data.Trips <- &processors.Trip{
-				Id:           uuid.NewString(),
-				DriverId:     driver.Id,
-				HotelId:      hotel.Id,
+				ID:           uuid.NewString(),
+				HotelID:      hotel.ID,
 				DriverRating: float64(rand.Intn(6)),
 				HotelRating:  float64(rand.Intn(6)),
 				Status:       "complete",
@@ -63,7 +64,7 @@ func main() {
 	// Wait for processor to finish processing data
 	wg.Wait()
 	topDriver := processor.GetTopRankedDriver()
-	fmt.Printf("Top driver found: %s\n", topDriver)
+	fmt.Printf("Top driver found: %s\n", topDriver.String())
 	topHotel := processor.GetTopRankedHotel()
-	fmt.Printf("Top hotel found: %s\n", topHotel)
+	fmt.Printf("Top hotel found: %s\n", topHotel.String())
 }

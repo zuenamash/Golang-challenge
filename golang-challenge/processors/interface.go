@@ -1,45 +1,44 @@
 package processors
 
 import (
-	"sync"
 	"fmt"
-) 
+	"sync"
+)
 
+// DriverRanking ...
 type DriverRanking struct {
-	// Fill in your properties here
-	driver *Driver
-	rank float64
-
+	Driver     *Driver
+	TotalTrips int
+	Rating     float64
 }
 
-func (*DriverRanking) String() string {
-	// Implement this function
-	return fmt.Sprintf("%v Rating-%2f",
-d.driver.Name,d.rank)
+func (d *DriverRanking) String() string {
+	return fmt.Sprintf("Driver: %s, Rating: %f", d.Driver.Name, d.Rating)
 }
 
+// HotelRanking ...
 type HotelRanking struct {
-	// Fill in your properties here
-	hotel *Hotel
-	rank float64
+	Hotel      *Hotel
+	TotalTrips int
+	Rating     float64
 }
 
-func (*HotelRanking) String() string {
-	// Implement this function
-	return fmt.Sprintf("%v Rating - %2f",
-	 h.hotel.Name, h.rank)
+func (h *HotelRanking) String() string {
+	return fmt.Sprintf("Hotel: %s, Rating: %f", h.Hotel.Name, h.Rating)
 }
 
+// ProcessorInterface ...
 type ProcessorInterface interface {
 	StartProcessing() error
 	GetTopRankedDriver() *DriverRanking
 	GetTopRankedHotel() *HotelRanking
 }
 
-func CreateProcessorFromData(data *TripsData, wg *sync.WaitGroup) ProcessorInterface  {
-	// @todo Initialize your processor here
-	return Processor{
-		data:data,
-		wg:wg
+// CreateProcessorFromData ...
+func CreateProcessorFromData(data *TripsData, wg *sync.WaitGroup) ProcessorInterface {
+	p := Processor{
+		data: data,
+		wg:   wg,
 	}
+	return &p
 }
