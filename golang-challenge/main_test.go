@@ -17,26 +17,17 @@ type Driver struct {
 }
 func main() {
 	trips := []Trip{}
-		bestdriver := findBestDriver(trips)
-		fmt.Print("The best driver is %s with a rate of %d",bestdriver.Name, bestdriver.Rate)
-		averagerate := findAveragerating(trips)
-		fmt.Printf("Average rate is %d", averagerate)
+
+results := DriverAllrates(trips)
+fmt.Println("mapping------------", results)
+drivers := Driverrates(results)
+fmt.Println("drivers and their rates ------------", driver)
+bestdriver := findBestDriver(drivers)
+
+// best driver :=findBestDriver(trips)
+fmt.Printf("The best driver is %s with a rate of %.if with %d number of trips \n", bestdriver.Name, bestdriver.rate
+bestdriver.Counter)
+// averagerate := findAvaragerating(trips)
+// fmt.printf("Average rate is %d, averagerate")
+
 }
-func findBestDriver(data []Trip) *Driver {
-		maxrate := 0
-		bestdriver := &Driver{}
-		for_, driver := rage data {
-			if driver.Rate > maxrate {
-				bestdriver.Name = driver.Driver
-				bestdriver.Rate = driver.Rate
-			}
-		}
-		return bestdriver
-	}
-func findAveragerating(data []Trip) int {
-		rates := 0
-		for _, driver := rage data {
-			rates += driver.Rate
-		}
-		return rates / len{data}
-	}	
